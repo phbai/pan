@@ -10,32 +10,57 @@ import Container from '../public/container/index'
 import { Row, Col, Table, Button, Upload, Icon, message } from 'antd';
 
 class Node extends Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {list: []};
+  }
 
-    const dataSource = [{
-      key: '1',
-      name: '胡彦斌',
-      age: 32,
-      address: '西湖区湖底公园1号'
-    }, {
-      key: '2',
-      name: '胡彦祖',
-      age: 42,
-      address: '西湖区湖底公园1号'
-    }];
+
+  componentDidMount() {
+    fetch("http://localhost:8080/list").then((res) => {
+      res.json().then((value) => {
+        this.setState({ list: value.result });
+        // console.log(value.result);
+      });
+    });
+  }
+
+  parseTime(timestamp) {
+    return new Date(parseInt(timestamp / 10000)).toLocaleString();
+  }
+
+  formatFileSize(fileSize, idx = 0) {  
+    const units = ["B", "KB", "MB", "GB"];  
+    if (fileSize < 1024 || idx === units.length - 1) {  
+        return fileSize.toFixed(1) + units[idx];  
+    }  
+    return this.formatFileSize(fileSize / 1024, ++idx);  
+  } 
+
+  render() {
+    const self = this;
+
+    const dataSource = this.state.list.map((item, index) => {
+      return {
+        key: index,
+        name: item.key,
+        size: self.formatFileSize(item.fsize),
+        time: self.parseTime(item.putTime),
+      }
+    });
 
     const columns = [{
-      title: '姓名',
+      title: '文件名',
       dataIndex: 'name',
       key: 'name',
     }, {
-      title: '年龄',
-      dataIndex: 'age',
-      key: 'age',
+      title: '文件大小',
+      dataIndex: 'size',
+      key: 'size',
     }, {
-      title: '住址',
-      dataIndex: 'address',
-      key: 'address',
+      title: '上传时间',
+      dataIndex: 'time',
+      key: 'time',
     }];
 
     const props = {
@@ -73,7 +98,7 @@ class Node extends Component {
             </Row>
             
             <Row>
-              <Table size="small" dataSource={dataSource} columns={columns} />
+              <Table dataSource={dataSource} columns={columns} />
             </Row>
           </Container>
           
