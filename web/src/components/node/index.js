@@ -8,6 +8,7 @@ import Header from './header/index'
 import Root from '../public/root'
 import Container from '../public/container/index'
 import { Row, Col, Table, Button, Upload, Icon, message } from 'antd';
+import './index.css'
 
 class Node extends Component {
   constructor(props) {
@@ -25,14 +26,10 @@ class Node extends Component {
     console.log(this.state.token);
   }
 
-  componentDidMount() {
-    fetch("http://localhost:8080/list").then((res) => {
-      res.json().then((value) => {
-        this.setState({ list: value.result });
-        // console.log(value.result);
-      });
-    });
+  async componentDidMount() {
+    this.refreshList();
   }
+
 
   parseTime(timestamp) {
     return new Date(parseInt(timestamp / 10000)).toLocaleString();
@@ -45,6 +42,24 @@ class Node extends Component {
     }  
     return this.formatFileSize(fileSize / 1024, ++idx);  
   } 
+
+  async refreshList() {
+    let list = await this.getList();
+    this.setState({ list: list });
+  }
+
+  async getList() {
+    const self = this;
+
+    return new Promise((resolve) => {
+      fetch("http://localhost:8080/list").then((res) => {
+        res.json().then((value) => {
+          resolve(value.result);
+        });
+      });
+    });
+    
+  }
 
   getToken() {
     return new Promise((resolve) => {
@@ -99,6 +114,7 @@ class Node extends Component {
         }
         if (info.file.status === 'done') {
           message.success(`${info.file.name} 上传成功`);
+          self.refreshList();
         } else if (info.file.status === 'error') {
           message.error(`${info.file.name} 上传失败`);
         }
@@ -110,7 +126,7 @@ class Node extends Component {
         <Root>
           <Header/>
           <Container>
-            <Row type="flex" justify="space-between">
+            <Row className="custom-row" type="flex" justify="space-between" align="middle">
               <Route path="/node/:nodeName" component={node}/>
 
               <Upload {...props}>
@@ -120,8 +136,8 @@ class Node extends Component {
               </Upload>
             </Row>
             
-            <Row>
-              <Table dataSource={dataSource} columns={columns} />
+            <Row className="custom-row">
+              <Table dataSource={dataSource} columns={columns} size="middle"/>
             </Row>
           </Container>
           
