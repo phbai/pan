@@ -12,9 +12,18 @@ import { Row, Col, Table, Button, Upload, Icon, message } from 'antd';
 class Node extends Component {
   constructor(props) {
     super(props);
-    this.state = {list: []};
+    this.state = {
+      list: [],
+      token: '',
+    };
   }
 
+  async componentWillMount() {
+    // const self = this;
+    const token = await this.getToken();
+    this.setState({token: token});
+    console.log(this.state.token);
+  }
 
   componentDidMount() {
     fetch("http://localhost:8080/list").then((res) => {
@@ -36,6 +45,17 @@ class Node extends Component {
     }  
     return this.formatFileSize(fileSize / 1024, ++idx);  
   } 
+
+  getToken() {
+    return new Promise((resolve) => {
+      fetch("http://localhost:8080/token").then((res) => {
+        res.json().then((value) => {
+          resolve(value.result);
+        })
+      });
+    });
+    
+  }
 
   render() {
     const self = this;
@@ -66,9 +86,12 @@ class Node extends Component {
     const props = {
       action: 'http://up-z0.qiniu.com/',
       multiple: true,
-      data:{
-          token: "Hd9yVDcIRDxD9BOskVm52HVlnEPLijuldYuzTLf6:9VT_BZ32CV3-1dj2l2fUhKBDnwQ=:eyJzY29wZSI6InBoYmFpIiwiZGVhZGxpbmUiOjE1MDI4MTExNjh9",
-          key: "测试",
+      showUploadList: false,
+      data: (file) => {
+        return {
+          token: this.state.token,
+          key: file.name,
+        }
       },
       onChange(info) {
         if (info.file.status !== 'uploading') {
