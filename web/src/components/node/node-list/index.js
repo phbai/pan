@@ -11,7 +11,7 @@ class NodeList extends React.Component {
         <div className="node-list-header">
             <Row type="flex" justify="space-between">
                 <Col span={11}>文件名</Col>
-                <Col span={2} >文件大小</Col>
+                <Col span={2}>文件大小</Col>
                 <Col span={11} className="text-align-right">上传时间</Col>
             </Row>
         </div>
