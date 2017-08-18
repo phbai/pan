@@ -5,6 +5,7 @@ import {
   Link
 } from 'react-router-dom'
 import Header from './header/index'
+import NodeList from './node-list/index'
 import Root from '../public/root'
 import Container from '../public/container/index'
 import { Row, Col, Table, Button, Upload, Icon, message } from 'antd';
@@ -96,6 +97,7 @@ class Node extends Component {
       title: '上传时间',
       dataIndex: 'time',
       key: 'time',
+      sortOrder: 'descend',
     }];
 
     const props = {
@@ -138,6 +140,10 @@ class Node extends Component {
             
             <Row className="custom-row">
               <Table dataSource={dataSource} columns={columns} size="middle"/>
+            </Row>
+
+            <Row className="custom-row">
+              <NodeList list={this.state.list}></NodeList>
             </Row>
           </Container>
           
