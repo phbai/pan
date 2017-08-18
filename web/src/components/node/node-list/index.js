@@ -17,7 +17,7 @@ class NodeList extends React.Component {
         </div>
         {this.props.list && this.props.list.map((item) => {
             return (
-                <NodeListItem item={item}></NodeListItem>
+                <NodeListItem item={item} key={item.key}></NodeListItem>
             )
         })}
         
