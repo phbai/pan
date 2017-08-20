@@ -53,7 +53,7 @@ class Node extends Component {
     const self = this;
 
     return new Promise((resolve) => {
-      fetch("http://localhost:8080/list").then((res) => {
+      fetch("http://localhost:8080/list/").then((res) => {
         res.json().then((value) => {
           resolve(value.result);
         });
