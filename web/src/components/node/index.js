@@ -4,8 +4,8 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import Header from './header/index'
-import NodeList from './node-list/index'
+import Header from '../node-header/index'
+import NodeList from '../node-list/index'
 import Root from '../public/root'
 import Container from '../public/container/index'
 import { Row, Col, Table, Button, Upload, Icon, message } from 'antd';
@@ -132,14 +132,10 @@ class Node extends Component {
               <Route path="/node/:nodeName" component={node}/>
 
               <Upload {...props}>
-                <Button>
+                <Button type="primary">
                   <Icon type="upload" /> 上传文件
                 </Button>
               </Upload>
-            </Row>
-            
-            <Row className="custom-row">
-              <Table dataSource={dataSource} columns={columns} size="middle"/>
             </Row>
 
             <Row className="custom-row">

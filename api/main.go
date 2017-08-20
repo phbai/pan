@@ -8,9 +8,19 @@ func main() {
 
     r.Use(cors.Default())
 
-    r.GET("/list", func(c *gin.Context) {
-	    result := ListFiles()
-	    
+    r.GET("/list/", func(c *gin.Context) {
+        result := ListFiles("")
+        
+        c.JSON(200, gin.H{
+            "code": 200,
+            "result": result,
+        })
+    })
+
+    r.GET("/list/:node", func(c *gin.Context) {
+        node := c.Param("node")
+        result := ListFiles(node)
+        
         c.JSON(200, gin.H{
             "code": 200,
             "result": result,
@@ -18,7 +28,7 @@ func main() {
     })
 
     r.GET("/token", func(c *gin.Context) {
-    	token := CreateUploadToken()
+        token := CreateUploadToken()
 
         c.JSON(200, gin.H{
             "code": 200,

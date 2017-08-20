@@ -7,7 +7,7 @@ import (
     "github.com/qiniu/api.v7/storage"
 )
 
-func ListFiles() []storage.ListItem {
+func ListFiles(prefix string) []storage.ListItem {
     mac := qbox.NewMac(AccessKey, SecretKey)
 
     cfg := storage.Config{
@@ -20,8 +20,10 @@ func ListFiles() []storage.ListItem {
     bucketManager := storage.NewBucketManager(mac, &cfg)
 
     limit := 1000
-    prefix := ""
+    // prefix := prefix
     delimiter := ""
+
+    fmt.Println(prefix)
     //初始列举marker为空
     marker := ""
     var result []storage.ListItem;

@@ -1,0 +1,21 @@
+.node-list-item {
+	margin-top: 14px;
+	margin-bottom: 14px;
+	height: 28px;
+}
+.node-list-item-title {
+	font-weight: bold;
+	font-size: 14px;
+	vertical-align: middle;
+}
+.node-list-item-image {
+	margin-right: 8px;
+}
+.node-list-item-icon {
+	margin-left: 4px;
+	margin-right: 12px;
+}
+.node-list-item-download-icon {
+	color: "#2d8cf0";
+	cursor: pointer;
+}
