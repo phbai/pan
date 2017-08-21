@@ -9,13 +9,13 @@
 	vertical-align: middle;
 }
 .node-list-item-image {
-	margin-right: 8px;
+	margin-right: 10px;
 }
 .node-list-item-icon {
 	margin-left: 4px;
 	margin-right: 12px;
 }
 .node-list-item-download-icon {
-	color: "#2d8cf0";
+	color: #2d8cf0;
 	cursor: pointer;
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "./index.css"
+import classNames from 'classnames';
 
 class Image extends React.Component {
   
@@ -13,8 +14,9 @@ class Image extends React.Component {
   	// 	verticalAlign: "middle"
   	// };
 
+    const classString = classNames("image", this.props.className);
     return (
-      <img className="image" src={this.props.src}/>
+      <img className={classString} src={this.props.src}/>
     )
   }
 }

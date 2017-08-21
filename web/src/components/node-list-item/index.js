@@ -22,7 +22,8 @@ class NodeListItem extends React.Component {
     let fileIcon = null;
 
     let imageStyle = {
-      margin: "20px"
+      marginRight: "20px",
+      background: "#000",
     }
 
     if (isImage(this.props.item)) {
